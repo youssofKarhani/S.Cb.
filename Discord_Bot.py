@@ -3,6 +3,8 @@ from discord.ext import commands
 import modules
 import nacl
 from database import db_controller 
+import os
+from dotenv import load_dotenv
 from model_1 import first_impression as initial_ChatLog
 
 controller = db_controller.db_controller();
@@ -171,7 +173,8 @@ async def send_custome_message(message, user_message, client):
         
 
 def run_discord_bot():
-    TOKEN = 'MTAzOTMyMDU5MDYzODY1MzQ3MQ.GYSpDb.Z52pyHT19qz3E5eeE1CzL8ojBDXwGJCqRJ2Sjg'
+    load_dotenv()
+    TOKEN = os.getenv("DISCORD_TOKEN")
     intents = discord.Intents.default()
     intents.message_content = True
     client = commands.Bot(command_prefix='§', intents=intents)
