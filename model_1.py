@@ -1,14 +1,14 @@
-from google import genai
+import google.generativeai as genai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure Gemini with the modern SDK
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+# Configure Gemini with the stable SDK
+genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 
 # Use the fast, free Gemini 1.5 Flash model
-MODEL_ID = "gemini-1.5-flash"
+model = genai.GenerativeModel('gemini-1.5-flash')
 
 start_sequence = "\nBot:"
 restart_sequence = "\n\nPerson:"
@@ -19,10 +19,7 @@ def ask(question, chat_log=""):
     full_prompt = f"{first_impression}\n{chat_log}\n{restart_sequence} {question}{start_sequence}"
     
     try:
-        response = client.models.generate_content(
-            model=MODEL_ID,
-            contents=full_prompt
-        )
+        response = model.generate_content(full_prompt)
         return response.text.strip()
     except Exception as e:
         print(f"Gemini API Error: {e}")
