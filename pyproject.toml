@@ -1,0 +1,21 @@
+[project]
+name = "scb"
+version = "0.1.0"
+description = "Multimodal Sentiment-aware Chatbot for Discord"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "discord-py>=2.7.1",
+    "google-generativeai>=0.8.6",
+    "keras-preprocessing>=1.1.2",
+    "mysql-connector-python>=9.6.0",
+    "openai>=2.26.0",
+    "pynacl>=1.6.2",
+    "python-dotenv>=1.2.2",
+    "tensorflow>=2.20.0",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.15.5",
+]
