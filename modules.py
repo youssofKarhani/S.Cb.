@@ -49,11 +49,11 @@ def append_ChatLog(question, answer, username, sentiment, sentiment_array):
     
 #function to return chatlog
 def return_ChatLog(username):
-    chatlog = controller.get_ChatLog(username);
-    str1 = "";
-    for i in range(0, len(chatlog)-1):
-        str1 = str1.join(chatlog[i]+chatlog[i+1]);
-    return str1
+    chatlog = controller.get_ChatLog(username)
+    if not chatlog:
+        return ""
+    # chatlog is a list of strings from the database
+    return "\n".join(chatlog)
    
 #-------Sentiment Functions-------#
 
