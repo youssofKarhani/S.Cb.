@@ -8,11 +8,11 @@ controller = db_controller.db_controller();
 
 class S_model:
     def __init__(self):
-        #load model
-        self.model = tf.keras.models.load_model('/Users/y.k./Desktop/Downloads/my_model.h5');
-        #Load Tokenizer of the model
-        with open('/Users/y.k./Desktop/Downloads/tokenizer.pickle', 'rb') as handle:
-            self.loaded_tokenizer = pickle.load(handle);
+        # Load model from the current directory
+        self.model = tf.keras.models.load_model('my_model.h5')
+        # Load Tokenizer from the current directory
+        with open('tokenizer.pickle', 'rb') as handle:
+            self.loaded_tokenizer = pickle.load(handle)
             
     def predict(self, message):
         msg = [message,];
