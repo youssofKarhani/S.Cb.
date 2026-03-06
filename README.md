@@ -225,12 +225,3 @@ Please open issues or PRs with proposals and code.
 ## License
 
 See LICENSE file in the repository root for license terms. If none exists, please add a license that matches how you want others to use this project.
-
----
-
-If you want, I can:
-- Add example prompts used to combine GRU outputs with GPT-3.5.
-- Draft training scripts or a sample dataset pipeline for re-training the GRU.
-- Create a CONTRIBUTING.md or deployment guide (Dockerfile, k8s) tailored to the repo.
-
- 
