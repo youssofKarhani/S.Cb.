@@ -13,12 +13,23 @@ from tensorflow.keras.layers import GRU, Bidirectional, Embedding
 
 controller = db_controller.db_controller()
 
+# Custom GRU layer to handle legacy 'time_major' argument from Keras 2 models
+class CompatibleGRU(GRU):
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('time_major', None)
+        super().__init__(*args, **kwargs)
+
+    @classmethod
+    def from_config(cls, config):
+        config.pop('time_major', None)
+        return super().from_config(config)
+
 class S_model:
     def __init__(self):
         # Load model with comprehensive custom_objects to handle nested layers (Bidirectional -> GRU)
-        # compile=False avoids errors with legacy optimizers in Keras 3
+        # Mapping 'GRU' to our CompatibleGRU fixes the Keras 3 incompatibility
         custom_mapping = {
-            'GRU': GRU,
+            'GRU': CompatibleGRU,
             'Bidirectional': Bidirectional,
             'Embedding': Embedding
         }

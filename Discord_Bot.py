@@ -120,6 +120,10 @@ async def check_customization(sentiment_array, message):
     
         
 async def send_custome_message(message, user_message, client):
+    global anger_level, sadness_level, fear_level, joy_level, surprise_level, love_level
+    global angerSong, sadnessSong, fearSong, joySong, surpriseSong, loveSong
+    global customization_level
+    
     print(len(user_message));
 
     if user_message[1:] == "#customize":
