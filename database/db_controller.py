@@ -23,19 +23,22 @@ class db_controller:
 
     #-----------User functions-----------#
     def select_users(self):
-        if not self._is_connected(): return None
+        if not self._is_connected():
+            return None
         self.cur.execute('SELECT * FROM Users')
         users = self.cur.fetchone()
         return users
         
     def select_user(self, username):
-        if not self._is_connected(): return None
+        if not self._is_connected():
+            return None
         self.cur.execute('SELECT Username FROM Users WHERE Username=%s', (username,))
         user = self.cur.fetchone()
         return user
 
     def insert_user(self, username):
-        if not self._is_connected(): return
+        if not self._is_connected():
+            return
         try:
             # Handle both old discriminators (Name#1234) and new handles (@name)
             name = username.split('#')[0] if '#' in username else username
@@ -47,7 +50,8 @@ class db_controller:
             print(f"There was an error while inserting the user: {e}")
         
     def update_name(self, username, name):
-        if not self._is_connected(): return
+        if not self._is_connected():
+            return
         try:
             self.cur.execute('UPDATE `Users` SET `Name`=%s WHERE `Username`=%s', (name, username))
             self.conn.commit()
@@ -57,7 +61,8 @@ class db_controller:
         
     #-----------Chatlog functions-----------#
     def add_Chatlog(self, username:str, chatlog, sentiment, anger, sadness, fear, joy, surprise, love):
-        if not self._is_connected(): return
+        if not self._is_connected():
+            return
         try:
             self.cur.execute('INSERT INTO `ChatLog`(`username`, `chatlog`, `sentiment`, `anger`, `sadness`, `fear`, `joy`, `surprise`, `love`) VALUES(%s, %s, %s, %s, %s, %s, %s, %s, %s)', (username, chatlog, sentiment, anger, sadness, fear, joy, surprise, love))
             self.conn.commit()
@@ -66,7 +71,8 @@ class db_controller:
             print(f"There was an error while updating chatlog: {e}")
 
     def get_ChatLog(self, username:str):
-        if not self._is_connected(): return []
+        if not self._is_connected():
+            return []
         try:
             self.cur.execute('SELECT `chatlog` FROM `ChatLog` WHERE `username`=%s', (username,))
             all_chatlog = self.cur.fetchall()
@@ -87,7 +93,8 @@ class db_controller:
     
     #-----------Sentiment functions-----------#
     def get_sentiment(self, username:str):
-        if not self._is_connected(): return []
+        if not self._is_connected():
+            return []
         try:
             self.cur.execute('SELECT `sentiment` FROM `ChatLog` WHERE `username`=%s ORDER BY ID DESC LIMIT 4', (username,))
             sentiments_array = self.cur.fetchall()
@@ -98,7 +105,8 @@ class db_controller:
             return []
             
     def get_sentiments_array(self, username:str):
-        if not self._is_connected(): return []
+        if not self._is_connected():
+            return []
         try:
             self.cur.execute('SELECT `anger`, `sadness`, `fear`, `joy`, `surprise`, `love` FROM `ChatLog` WHERE `username`=%s ORDER BY ID DESC LIMIT 4', (username,))
             sentiments = self.cur.fetchall()

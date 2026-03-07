@@ -14,6 +14,7 @@ from tensorflow.keras.layers import GRU, Bidirectional, Embedding
 controller = db_controller.db_controller()
 
 # Custom GRU layer to handle legacy 'time_major' argument from Keras 2 models
+@tf.keras.utils.register_keras_serializable(package='Custom')
 class CompatibleGRU(GRU):
     def __init__(self, *args, **kwargs):
         kwargs.pop('time_major', None)
@@ -27,9 +28,10 @@ class CompatibleGRU(GRU):
 class S_model:
     def __init__(self):
         # Load model with comprehensive custom_objects to handle nested layers (Bidirectional -> GRU)
-        # Mapping 'GRU' to our CompatibleGRU fixes the Keras 3 incompatibility
+        # Mapping both 'GRU' and 'CompatibleGRU' to our class fixes the Keras 3 incompatibility
         custom_mapping = {
             'GRU': CompatibleGRU,
+            'CompatibleGRU': CompatibleGRU,
             'Bidirectional': Bidirectional,
             'Embedding': Embedding
         }
