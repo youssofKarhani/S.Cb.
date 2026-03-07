@@ -3,7 +3,12 @@ from keras_preprocessing.sequence import pad_sequences
 import tensorflow as tf
 import pickle
 import os
+import sys
 from database import db_controller
+
+# Compatibility hack for loading older Keras tokenizers in newer environments
+import keras_preprocessing
+sys.modules['keras.preprocessing.text'] = keras_preprocessing.text
 
 # Suppress TensorFlow warnings as requested in logs
 os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
